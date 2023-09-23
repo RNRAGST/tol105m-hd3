@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html;charset=utf-8" >
+<title>Fallandi punktar</title>
+
+<script id="vertex-shader" type="x-shader/x-vertex">
+uniform float time;
+attribute vec4 vPosition;
+
+void main()
+{
+	gl_PointSize = 3.0;
+    vec4 tpos = vPosition;
+
+    tpos.y = 1.0 - mod(0.0015*time + tpos.y+1.0, 2.0);
+
+    gl_Position = tpos;
+    
+}
+</script>
+
+<script id="fragment-shader" type="x-shader/x-fragment">
+precision mediump float;
+vec4 blue = vec4(2.0/255.0, 82.0/255.0, 156.0/255.0, 1.0); //rgb 2, 82, 156 (blue)
+vec4 red = vec4(220.0/255.0, 30.0/255.0, 53.0/255.0, 1.0); //rgb 220, 30, 53 (red)
+vec4 white = vec4(255.0, 255.0, 255.0, 1.0); //rgb 255, 255, 255 (white)
+
+void main()
+{
+    
+    if(gl_FragCoord.x > 7.0*25.0 && gl_FragCoord.x < (500.0-(7.0*25.0))) {
+        if(gl_FragCoord.x > 8.0*25.0 && gl_FragCoord.x < (500.0-(8.0*25.0))) {
+            gl_FragColor = red;
+        }else {
+            if(gl_FragCoord.y > 250.0 && gl_FragCoord.y < 350.0) {
+                gl_FragColor = red;
+
+            }else {
+                gl_FragColor = white;
+
+            }
+
+        }
+
+    }else if(gl_FragCoord.y > 225.0 && gl_FragCoord.y < 375.0) {
+        if(gl_FragCoord.y > 250.0 && gl_FragCoord.y < 350.0) {
+            gl_FragColor = red;
+        }else {
+            gl_FragColor = white;
+
+        }
+
+    }
+    else {
+        gl_FragColor = blue;
+
+    }
+
+
+}
+</script>
+
+<script type="text/javascript" src="../Common/webgl-utils.js"></script>
+<script type="text/javascript" src="../Common/initShaders.js"></script>
+<script type="text/javascript" src="../Common/MV.js"></script>
+<script type="text/javascript" src="fallingPoints.js"></script>
+</head>
+
+<body>
+<canvas id="gl-canvas" width="600" height="600">
+</body>
+</html>
